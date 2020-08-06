@@ -1,0 +1,29 @@
+{
+  "name": "RHO-Node.js-Challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx webpack -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BernardoFuret/RHO-Node.js-Challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BernardoFuret/RHO-Node.js-Challenge/issues"
+  },
+  "homepage": "https://github.com/BernardoFuret/RHO-Node.js-Challenge#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon-webpack-plugin": "^4.3.2",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}
