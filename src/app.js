@@ -6,7 +6,7 @@ const port = process.env.PORT || 8080;
 
 const app = express();
 
-const LANGUAGES = [ 'en-gb', 'de-de' ];
+const LANGUAGES = require( './languages' );
 
 for ( const language of LANGUAGES ) {
 	app.use( `/${language}/sports`, routers.sports( language ) );
