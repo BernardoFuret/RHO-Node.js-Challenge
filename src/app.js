@@ -14,6 +14,10 @@ for ( const language of LANGUAGES ) {
 	app.use( `/${language}/events`, routers.events( language ) );
 }
 
+app.get( '/sports', ( req, res ) => {
+	res.json( { type: 'sports' } );
+} );
+
 app.get( '/:lang/*', ( req, res, next ) => {
 	if ( !LANGUAGES.includes( req.params.lang ) ) {
 		const message = `Invalid language: '${req.params.lang}'. Valid languages are ${LANGUAGES.map( lang => `'${lang}'` )}.`;
