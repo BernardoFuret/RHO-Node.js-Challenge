@@ -14,12 +14,18 @@ for ( const language of LANGUAGES ) {
 	app.use( `/${language}/events`, routers.events( language ) );
 }
 
-app.get( '/:lang/:any', ( req, res ) => {
-	const message = `Invalid language: '${req.params.lang}'. Valid languages are ${LANGUAGES.map( lang => `'${lang}'` )}.`;
+app.get( '/:lang/*', ( req, res, next ) => {
+	if ( !LANGUAGES.includes( req.params.lang ) ) {
+		const message = `Invalid language: '${req.params.lang}'. Valid languages are ${LANGUAGES.map( lang => `'${lang}'` )}.`;
 
-	res.json( {
-		error: message,
-	} );
+		res.json( {
+			error: message,
+		} );
+
+		return;
+	}
+
+	next();
 } );
 
 app.listen( port, err => {
