@@ -10,6 +10,8 @@ const LANGUAGES = require( './languages' );
 
 for ( const language of LANGUAGES ) {
 	app.use( `/${language}/sports`, routers.sports( language ) );
+
+	app.use( `/${language}/events`, routers.events( language ) );
 }
 
 app.get( '/:lang/:any', ( req, res ) => {
