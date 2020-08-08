@@ -27,7 +27,7 @@ class DataService {
 	async fetch( lang ) { // TODO: support no lang
 		const url = makeUrl( lang );
 
-		const { status, result } = await fetch( url, headers )
+		const { status, result } = await fetch( url, { headers } )
 			.then( checkStatus( url ) )
 			.then( r => r.json() )
 		;
