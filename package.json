@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/BernardoFuret/RHO-Node.js-Challenge#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "nodemon-webpack-plugin": "^4.3.2",
