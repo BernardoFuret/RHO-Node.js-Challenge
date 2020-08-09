@@ -3,6 +3,6 @@
  */
 
 module.exports = [
-	'en-en',
+	'en-gb',
 	'de-de',
 ];
