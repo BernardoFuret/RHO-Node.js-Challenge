@@ -1,6 +1,7 @@
 /**
  * Endpoint to deal with events.
  */
+// TODO: split logic to own module
 
 const express = require( 'express' );
 
@@ -42,16 +43,41 @@ router.get( '/', async ( req, res ) => {
 	}
 } );
 
-router.get( '/:id', ( req, res ) => {
+router.get( '/:id', async ( req, res ) => {
 	const { id } = req.params;
 
 	const { lang } = req.query;
 
-	res.json( {
-		lang,
-		id,
-		type: 'specific event',
-	} );
+	try {
+		const upstreamData = await DataService.fetch( lang );
+
+		const nEventId = parseInt( id );
+		
+		const eventData = upstreamData.sports
+			.flatMap( sport => sport.comp )
+			.flatMap( comp => comp.events )
+			.find( event => event.id === nEventId )
+		;
+
+		if ( eventData ) {
+			res.json( {
+				status: 'success',
+				data: eventData,
+			} );
+		} else {
+			res.status( 404 ).json( {
+				status: 'error',
+				error: `Event with ID ${id} not found.`,
+			} );
+		}
+	} catch ( e ) {
+		console.log( 'Error accessing data @events/:id', e );
+
+		res.status( 500 ).json( {
+			status: 'error',
+			error: e.message,
+		} );
+	}
 } );
 
 module.exports = router;
