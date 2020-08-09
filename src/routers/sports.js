@@ -1,5 +1,5 @@
 /**
- * Endpoint for `/sports`.
+ * Endpoint to deal with sports.
  */
 
 const express = require( 'express' );
@@ -12,14 +12,21 @@ router.get( '/', async ( req, res ) => {
 	const { lang } = req.query;
 
 	try {
-		const data = await DataService.fetch( lang );
+		const upstreamData = await DataService.fetch( lang );
+
+		// TODO: split logic to a different module
+		const data = upstreamData.sports
+			.map( sport => ( {
+				id: sport.id,
+				pos: sport.pos,
+				desc: sport.desc,
+			} ) )
+			.sort( ( s1, s2 ) => s1.pos - s2.pos )
+		;
 
 		res.json( {
 			status: 'success',
-			data: data.sports.map( sportData => ( { // TODO: split logic to a different module
-				id: sportData.id,
-				title: sportData.desc,
-			} ) ),
+			data,
 		} );
 	} catch ( e ) {
 		console.log( 'Error accessing data @sports', e );
