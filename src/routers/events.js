@@ -1,11 +1,10 @@
 /**
  * Endpoint to deal with events.
  */
-// TODO: split logic to own module
 
 const express = require( 'express' );
 
-const DataService = require( '../services/data' );
+const EventsModel = require( '../models/events' );
 
 const router = express.Router();
 
@@ -13,21 +12,7 @@ router.get( '/', async ( req, res ) => {
 	const { lang, sportId } = req.query;
 
 	try {
-		const upstreamData = await DataService.fetch( lang );
-
-		const nSportId = parseInt( sportId );
-
-		const data = upstreamData.sports
-			.filter( sport => ( sportId == null ) || ( nSportId === sport.id ) )
-			.flatMap( sport => sport.comp )
-			.flatMap( comp => comp.events )
-			.map( event => ( {
-				id: event.id,
-				pos: event.pos,
-				desc: event.desc,
-			} ) )
-//			.sort( ( e1, e2 ) => e1.pos - e2.pos ) TODO: sort by grouping?
-		;
+		const data = await EventsModel.getEvents( lang, sportId );
 
 		res.json( {
 			status: 'success',
@@ -49,20 +34,12 @@ router.get( '/:id', async ( req, res ) => {
 	const { lang } = req.query;
 
 	try {
-		const upstreamData = await DataService.fetch( lang );
+		const data = await EventsModel.getEvent( lang, id );
 
-		const nEventId = parseInt( id );
-		
-		const eventData = upstreamData.sports
-			.flatMap( sport => sport.comp )
-			.flatMap( comp => comp.events )
-			.find( event => event.id === nEventId )
-		;
-
-		if ( eventData ) {
+		if ( data ) {
 			res.json( {
 				status: 'success',
-				data: eventData,
+				data,
 			} );
 		} else {
 			res.status( 404 ).json( {
