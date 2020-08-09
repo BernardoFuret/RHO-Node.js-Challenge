@@ -4,7 +4,7 @@
 
 const express = require( 'express' );
 
-const DataService = require( '../services/data' );
+const SportsModel = require( '../models/sports' );
 
 const router = express.Router();
 
@@ -12,17 +12,7 @@ router.get( '/', async ( req, res ) => {
 	const { lang } = req.query;
 
 	try {
-		const upstreamData = await DataService.fetch( lang );
-
-		// TODO: split logic to a different module
-		const data = upstreamData.sports
-			.map( sport => ( {
-				id: sport.id,
-				pos: sport.pos,
-				desc: sport.desc,
-			} ) )
-			.sort( ( s1, s2 ) => s1.pos - s2.pos )
-		;
+		const data = await SportsModel.getAllSports( lang );
 
 		res.json( {
 			status: 'success',
