@@ -12,7 +12,10 @@ router.get( '/', async ( req, res ) => {
 	const { lang } = req.query;
 
 	try {
-		const data = await SportsModel.getAllSports( lang );
+		const data = await ( lang
+			? SportsModel.getAllSports( lang )
+			: SportsModel.getAllSportsForAllLanguages()
+		);
 
 		res.json( {
 			status: 'success',

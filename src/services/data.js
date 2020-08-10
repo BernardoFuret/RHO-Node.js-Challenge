@@ -30,7 +30,7 @@ class DataService {
 		this.cache = new Cache( 5 * 60 * 1000 );
 	}
 
-	async fetch( lang ) { // TODO: support no lang
+	async fetch( lang ) {
 		return this.cache.get( lang, async () => {
 			const url = makeUrl( lang );
 
