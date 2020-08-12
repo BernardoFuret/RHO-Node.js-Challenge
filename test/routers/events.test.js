@@ -127,7 +127,7 @@ describe( 'events router', () => {
 		test( 'without language', async () => {
 			const res = await request( app ).get( '/events' );
 
-			expect( res.status ).toBe( 500 );
+			expect( res.status ).toBe( 400 );
 
 			expect( res.body.status ).toEqual( 'error' );
 		} );

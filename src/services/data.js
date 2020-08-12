@@ -6,6 +6,8 @@ const fetch = require( 'node-fetch' ).default; // Workaround for https://github.
 
 const Cache = require( '../util/cache' );
 
+const { ResponseError } = require( '../util' );
+
 const headers = {
 	'User-Agent': 'RHO Node.js Chalenge (+https://github.com/BernardoFuret/RHO-Node.js-Challenge)',
 };
@@ -32,7 +34,7 @@ class DataService {
 
 	async fetch( lang ) {
 		if ( !lang ) {
-			throw new Error( 'No language provided' );
+			throw new ResponseError( 'No language provided', 400 );
 		}
 
 		return this.cache.get( lang, async () => {
@@ -44,7 +46,7 @@ class DataService {
 			;
 
 			if ( !status.success ) {
-				throw new Error( `No success. Error code: ${status.errorCode}` );
+				throw new ResponseError( `No success. Original error code: ${status.errorCode}` );
 			}
 
 			return result;
