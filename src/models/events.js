@@ -4,6 +4,8 @@
 
 const DataService = require( '../services/data' );
 
+const { ResponseError, doThrow } = require( '../util' );
+
 async function getEvents( lang, sportId ) {
 	const upstreamData = await DataService.fetch( lang );
 
@@ -31,6 +33,8 @@ async function getEvent( lang, eventId ) {
 		.flatMap( sport => sport.comp )
 		.flatMap( comp => comp.events )
 		.find( event => event.id === nEventId )
+		||
+		doThrow( new ResponseError( `Event with ID ${eventId} not found`, 404 ) )
 	;
 }
 
