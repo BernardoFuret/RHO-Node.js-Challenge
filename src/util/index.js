@@ -3,6 +3,14 @@
  */
 
 /**
+ * Wrapper to allow throwing errors as if `throw`
+ * was an expression.
+ */
+function doThrow( error ) {
+	throw error;
+}
+
+/**
  * This function receives a function that corresponds
  * to the data logic part of the controller.
  * This functions then deals with the error handling
@@ -21,7 +29,7 @@ function makeController( controller ) {
 		} catch ( e ) {
 			console.error( 'Error while accessing', req.originalUrl, e );
 
-			res.status( e.status || 500 ).json( {
+			res.status( e.statusCode || 500 ).json( {
 				status: 'error',
 				error: e.message,
 			} );
@@ -30,5 +38,8 @@ function makeController( controller ) {
 }
 
 module.exports = {
+	doThrow,
 	makeController,
+
+	ResponseError: require( './responseError' ),
 };
