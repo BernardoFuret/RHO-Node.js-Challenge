@@ -41,5 +41,6 @@ module.exports = {
 	doThrow,
 	makeController,
 
+	Cache: require( './cache' ),
 	ResponseError: require( './responseError' ),
 };

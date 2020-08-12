@@ -4,9 +4,7 @@
 
 const fetch = require( 'node-fetch' ).default; // Workaround for https://github.com/node-fetch/node-fetch/issues/450
 
-const Cache = require( '../util/cache' );
-
-const { ResponseError } = require( '../util' );
+const { Cache, ResponseError } = require( '../util' );
 
 const headers = {
 	'User-Agent': 'RHO Node.js Chalenge (+https://github.com/BernardoFuret/RHO-Node.js-Challenge)',
