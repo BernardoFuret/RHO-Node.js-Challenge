@@ -124,6 +124,14 @@ describe( 'events router', () => {
 			expect( res.body.data[ 0 ] ).toEqual( mockResponseDe.result.sports[ 0 ].comp[ 0 ].events[ 0 ] );
 		} );
 
+		test( 'without language', async () => {
+			const res = await request( app ).get( '/events' );
+
+			expect( res.status ).toBe( 500 );
+
+			expect( res.body.status ).toEqual( 'error' );
+		} );
+
 		test( 'with sportId', async done => {
 			const lang = 'de-de';
 
