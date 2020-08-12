@@ -31,6 +31,10 @@ class DataService {
 	}
 
 	async fetch( lang ) {
+		if ( !lang ) {
+			throw new Error( 'No language provided' );
+		}
+
 		return this.cache.get( lang, async () => {
 			const url = makeUrl( lang );
 
