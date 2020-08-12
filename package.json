@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx webpack -w",
-    "test": "jest --verbose --detectOpenHandles --coverage"
+    "test": "jest --verbose --detectOpenHandles --coverage --silent"
   },
   "repository": {
     "type": "git",
