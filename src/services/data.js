@@ -40,7 +40,7 @@ class DataService {
 			;
 
 			if ( !status.success ) {
-				throw new Error( `No success. Error code: ${result.errorCode}` );
+				throw new Error( `No success. Error code: ${status.errorCode}` );
 			}
 
 			return result;
