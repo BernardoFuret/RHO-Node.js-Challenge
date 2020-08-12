@@ -13,6 +13,11 @@ const mockResponseEn = {
 	'result': {
 		'sports': [
 			{
+				'id':101,
+				'desc':'Tennis',
+				'pos':3,
+			},
+			{
 				'id':100,
 				'desc':'Football',
 				'pos':1,
@@ -73,9 +78,9 @@ describe( 'sports router', () => {
 
 			expect( res.body.status ).toEqual( 'success' );
 
-			expect( res.body.data.length ).toBe( 1 );
+			expect( res.body.data.length ).toBe( 2 );
 
-			expect( res.body.data[ 0 ] ).toEqual( mockResponseEn.result.sports[ 0 ] );
+			expect( res.body.data[ 0 ] ).toEqual( mockResponseEn.result.sports[ 1 ] );
 		} );
 
 		test( 'using German language', async () => {
@@ -114,11 +119,12 @@ describe( 'sports router', () => {
 
 			expect( res.body.status ).toEqual( 'success' );
 
-			expect( res.body.data.length ).toBe( 2 );
+			expect( res.body.data.length ).toBe( 3 );
 
 			expect( res.body.data ).toEqual( [
-				mockResponseEn.result.sports[ 0 ],
-				mockResponseDe.result.sports[ 0 ],
+				mockResponseEn.result.sports[ 1 ], // Football
+				mockResponseDe.result.sports[ 0 ], // Fußball
+				mockResponseEn.result.sports[ 0 ], // Tennis
 			] );
 
 			done();
