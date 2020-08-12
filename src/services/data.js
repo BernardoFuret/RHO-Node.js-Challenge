@@ -19,7 +19,7 @@ function checkStatus( url ) {
 		if ( r.ok ) {
 			return r;
 		} else {
-			throw new Error( `Error accessing ${url}. ${r.status}: ${r.statusText}` );
+			throw new ResponseError( `Error accessing ${url}. ${r.status}: ${r.statusText}`, 502 );
 		}
 	};
 }

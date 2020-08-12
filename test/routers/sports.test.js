@@ -59,7 +59,7 @@ describe( 'sports router', () => {
 
 			const res = await request( app ).get( '/sports?lang=en-gb' );
 
-			expect( res.status ).toBe( 500 );
+			expect( res.status ).toBe( 502 );
 
 			expect( res.body.status ).toEqual( 'error' );
 		} );
