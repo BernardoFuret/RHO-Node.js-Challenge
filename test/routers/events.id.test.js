@@ -39,24 +39,6 @@ describe( 'events router', () => {
 
 	describe( 'GET /events/:id', () => {
 
-		test( 'with upstream error', async () => {
-			nock( 'https://partners.betvictor.mobi' )
-				.get( `/${lang}/in-play/1/events` )
-				.reply( 500, {
-					'status': {
-						'success': false,
-						'errorCode': 'X',
-					},
-				} )
-			;
-
-			const res = await request( app ).get( `/events/0?lang=${lang}` );
-
-			expect( res.status ).toBe( 500 );
-
-			expect( res.body.status ).toEqual( 'error' );
-		} );
-
 		test( 'with existent id', async () => {
 			const mockEvent = mockResponseEn.result.sports[ 0 ].comp[ 0 ].events[ 0 ];
 
