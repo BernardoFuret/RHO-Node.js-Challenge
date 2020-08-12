@@ -66,7 +66,7 @@ describe( 'events router', () => {
 
 	describe( 'GET /events', () => {
 
-		test( 'with upstream error', async () => {
+		test( 'with unsuccessful upstream response', async () => {
 			const lang = 'en-gb';
 
 			nock( 'https://partners.betvictor.mobi' )
