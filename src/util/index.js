@@ -11,6 +11,13 @@ function doThrow( error ) {
 }
 
 /**
+ * Function to sort by the "pos" field
+ */
+function sortByPos( o1, o2 ) {
+	return o1.pos - o2.pos;
+}
+
+/**
  * This function receives a function that corresponds
  * to the data logic part of the controller.
  * This functions then deals with the error handling
@@ -39,6 +46,7 @@ function makeController( controller ) {
 
 module.exports = {
 	doThrow,
+	sortByPos,
 	makeController,
 
 	Cache: require( './cache' ),

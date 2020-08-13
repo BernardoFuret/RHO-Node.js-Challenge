@@ -6,6 +6,8 @@ const DataService = require( '../services/data' );
 
 const languages = require( '../resources/languages' );
 
+const { sortByPos } = require( '../util' );
+
 async function getAllSports( lang ) {
 	const upstreamData = await DataService.fetch( lang );
 
@@ -15,7 +17,7 @@ async function getAllSports( lang ) {
 			pos: sport.pos,
 			desc: sport.desc,
 		} ) )
-		.sort( ( s1, s2 ) => s1.pos - s2.pos )
+		.sort( sortByPos )
 	;
 }
 
@@ -32,7 +34,7 @@ async function getAllSportsForAllLanguages() {
 				desc: sport.desc,
 			} ) );
 		} )
-		.sort( ( s1, s2 ) => s1.pos - s2.pos )
+		.sort( sortByPos )
 	;
 }
 

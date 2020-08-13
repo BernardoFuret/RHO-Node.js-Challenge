@@ -4,7 +4,7 @@
 
 const DataService = require( '../services/data' );
 
-const { ResponseError, doThrow } = require( '../util' );
+const { ResponseError, doThrow, sortByPos } = require( '../util' );
 
 async function getEvents( lang, sportId ) {
 	const upstreamData = await DataService.fetch( lang );
@@ -13,9 +13,9 @@ async function getEvents( lang, sportId ) {
 
 	return upstreamData.sports
 		.filter( sport => ( sportId == null ) || ( nSportId === sport.id ) )
-		.sort( ( s1, s2 ) => s1.pos - s2.pos )
-		.flatMap( sport => sport.comp.sort( ( c1, c2 ) => c1.pos - c2.pos ) )
-		.flatMap( comp => comp.events.sort( ( e1, e2 ) => e1.pos - e2.pos ) )
+		.sort( sortByPos )
+		.flatMap( sport => sport.comp.sort( sortByPos ) )
+		.flatMap( comp => comp.events.sort( sortByPos ) )
 		.map( event => ( {
 			id: event.id,
 			pos: event.pos,
