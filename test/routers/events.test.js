@@ -11,19 +11,52 @@ const mockResponseEn = {
 		'extraInfo': {},
 	},
 	'result': {
-		'total_number_of_events': 1,
+		'total_number_of_events': 4,
 		'sports': [
 			{
 				'id': 100,
 				'desc': 'Football',
+				'pos': 2,
+				'comp': [
+					{
+						'pos': 13,
+						'events': [
+							{
+								'id': 121,
+								'desc': 'FC1 vs. FC2',
+								'pos': 1111,
+							},
+						],
+					},
+				],
+			},
+			{
+				'id': 100,
+				'desc': 'Tennis',
+				'pos': 1,
 				'comp': [
 					{
 						'pos': 14,
 						'events': [
 							{
-								'id': 12,
-								'desc': 'FC1 vs. FC2',
+								'id': 122,
+								'desc': 'FC3 vs. FC4',
 								'pos': 9999,
+							},
+						],
+					},
+					{
+						'pos': 12,
+						'events': [
+							{
+								'id': 123,
+								'desc': 'FC5 vs. FC6',
+								'pos': 3333,
+							},
+							{
+								'id': 124,
+								'desc': 'FC7 vs. FC8',
+								'pos': 2222,
 							},
 						],
 					},
@@ -86,7 +119,22 @@ describe( 'events router', () => {
 			expect( res.body.status ).toEqual( 'error' );
 		} );
 
-		test( 'using English language', async () => {
+		test( 'using a language', async () => {
+			const lang = 'en-gb';
+
+			nock( 'https://partners.betvictor.mobi' )
+				.get( `/${lang}/in-play/1/events` )
+				.reply( 200, mockResponseEn )
+			;
+
+			const res = await request( app ).get( `/events?lang=${lang}` );
+
+			expect( res.status ).toBe( 200 );
+
+			expect( res.body.status ).toEqual( 'success' );
+		} );
+
+		test( 'sorting of returned events', async () => {
 			const lang = 'en-gb';
 
 			nock( 'https://partners.betvictor.mobi' )
@@ -102,26 +150,28 @@ describe( 'events router', () => {
 
 			expect( res.body.data.length ).toBe( mockResponseEn.result.total_number_of_events );
 
-			expect( res.body.data[ 0 ] ).toEqual( mockResponseEn.result.sports[ 0 ].comp[ 0 ].events[ 0 ] );
-		} );
-
-		test( 'using German language', async () => {
-			const lang = 'de-de';
-
-			nock( 'https://partners.betvictor.mobi' )
-				.get( `/${lang}/in-play/1/events` )
-				.reply( 200, mockResponseDe )
-			;
-
-			const res = await request( app ).get( `/events?lang=${lang}` );
-
-			expect( res.status ).toBe( 200 );
-
-			expect( res.body.status ).toEqual( 'success' );
-
-			expect( res.body.data.length ).toBe( mockResponseDe.result.total_number_of_events );
-
-			expect( res.body.data[ 0 ] ).toEqual( mockResponseDe.result.sports[ 0 ].comp[ 0 ].events[ 0 ] );
+			expect( res.body.data ).toEqual( [
+				{
+					'id': 124,
+					'desc': 'FC7 vs. FC8',
+					'pos': 2222,
+				},
+				{
+					'id': 123,
+					'desc': 'FC5 vs. FC6',
+					'pos': 3333,
+				},
+				{
+					'id': 122,
+					'desc': 'FC3 vs. FC4',
+					'pos': 9999,
+				},
+				{
+					'id': 121,
+					'desc': 'FC1 vs. FC2',
+					'pos': 1111,
+				},
+			] );
 		} );
 
 		test( 'without language', async () => {
