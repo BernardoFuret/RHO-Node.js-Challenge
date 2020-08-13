@@ -2,7 +2,7 @@
   "name": "RHO-Node.js-Challenge",
   "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "npx webpack -w",
     "test": "jest --verbose --detectOpenHandles --coverage --silent"
